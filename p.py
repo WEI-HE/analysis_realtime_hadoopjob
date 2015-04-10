@@ -12,9 +12,9 @@ from db import *
 
 app_master="http://YARN_HOST:8088"
 logging.basicConfig(filename = os.path.join(os.getcwd(), 'run.log'), level = logging.DEBUG,format = '%(asctime)s - %(levelname)s: %(message)s')
-#"No","ApplicationId","Used Memory","Queue","Submitter","VCores","RunningContainer","JobName")
+
 title_item_format = "{:^3s}\t{:^40s}\t{:^10s}\t{:^25s}\t{:^20s}\t{:^10s}\t{:^10s}\t{:<40s}"
-#Return the items of json
+
 def rtnJsonItems(url,root,subitem):
         response = requests.get(url)
         json_items = json.loads(response.text)
@@ -22,14 +22,9 @@ def rtnJsonItems(url,root,subitem):
         items = json_items[root][subitem]
         return items
 
-#usedMemoryBytes=0
-#Return the job counters
 def getJobCounter(appId):
         url = app_master+"/proxy/{appId}/ws/v1/mapreduce/jobs".format(appId=appId)
-        #response = requests.get(url)
-        #json_jobs = json.loads(response.text)
-
-        
+       
         jobs = rtnJsonItems(url,"jobs","job")
         if len(jobs)==1:
                 jobId = jobs[0]["id"]
